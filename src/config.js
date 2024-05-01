@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:5001";
+export const BASE_URL = "https://dronecloudbackend.adaptable.app";
 export const API_ENDPOINTS = {
 
     //mission-menu-manager.js
