@@ -18,7 +18,7 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Name: ${firstname}, Email: ${email}, Password: ${password}`);
+    // console.log(`Name: ${firstname}, Email: ${email}, Password: ${password}`);
     // Perform registration logic here, and handle routing upon successful registration.
     sendRequest().then(()=>navigate("/login"));
   };

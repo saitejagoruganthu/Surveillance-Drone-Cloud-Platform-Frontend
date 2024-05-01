@@ -248,7 +248,11 @@ const scrollBarStyles = {
   }
 
   const getRecentNotifications = async ()=>{
-    const res = await axios.get(`${BASE_URL}${API_ENDPOINTS.getRecentNotifications}`);
+    const res = await axios.get(`${BASE_URL}${API_ENDPOINTS.getRecentNotifications}`, {
+      params: {
+        userId: userdetails.email
+      }
+    });
     //console.log(res.data);
     return res.data;
   }
