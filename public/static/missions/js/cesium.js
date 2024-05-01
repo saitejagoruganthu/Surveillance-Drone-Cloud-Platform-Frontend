@@ -236,7 +236,7 @@
             if (missionId != "") {
                 console.log("go fetch data");
                 try {
-                    const response = await fetch(`http://localhost:5001/api/getonemissionforplanner?missionId=${missionId}`);
+                    const response = await fetch(`https://dronecloudbackend.adaptable.app/api/getonemissionforplanner?missionId=${missionId}`);
                     const data = await response.json();
                     missionJSON = data;
                     if(data.message === "Mission not found")

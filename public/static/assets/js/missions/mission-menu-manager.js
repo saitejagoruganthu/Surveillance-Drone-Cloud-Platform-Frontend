@@ -211,7 +211,7 @@ class DomMissionManager {
             console.log("formAction", formAction);
             console.log("thumbnailName", thumbnailName);
 
-            fetch('http://localhost:5001/api/createMissionPlanNew', {
+            fetch('https://dronecloudbackend.adaptable.app/api/createMissionPlanNew', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
