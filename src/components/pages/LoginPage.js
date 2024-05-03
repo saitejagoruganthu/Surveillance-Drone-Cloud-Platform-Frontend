@@ -13,16 +13,17 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Email: ${email}, Password: ${password}`);
+    // console.log(`Email: ${email}, Password: ${password}`);
     // Perform authentication here, and handle routing upon successful authentication.
     sendRequest().then(async()=>{
       const res=await axios.get(
         `${BASE_URL}${API_ENDPOINTS.getUserProfile}/${email}`
       );
-      console.log("USER DETAILS:",res.data.user);
+      // console.log("USER DETAILS:",res.data.user);
       TenantIdSingleton.id = email;
       Object.freeze(TenantIdSingleton);
-      //res.data.user.email = "marepalliharish@gmail.com";
+      // res.data.user.email = "marepalliharish@gmail.com";
+      // res.data.user.lastname = "Marepalli";
       window.sessionStorage.setItem("userdetails",JSON.stringify(res.data.user));
       //window.localStorage.setItem("page","Dashboard");
       navigate("/dashboard");

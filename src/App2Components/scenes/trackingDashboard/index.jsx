@@ -10,7 +10,7 @@ import DroneStatisticsCard from "../../components/DroneStatisticsCard";
 import LiveNotificationCard from '../../components/LiveNotificationCard';
 import axios from "axios";
 import { useEffect,useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions,CircularProgress } from "@mui/material";
 import Slide from '@mui/material/Slide';
 import TrackMissionDialog from "../trackMissionDialog";
 import { styled } from '@mui/material/styles';
@@ -33,6 +33,14 @@ const TrackingDashboard = () => {
   const [maxWidth, setMaxWidth] = React.useState('xl');
   const [fullWidth, setFullWidth] = React.useState(true);
   const [scroll, setScroll] = React.useState('paper');
+  const [droneCount, setDroneCount] = useState(0);
+  const [droneCounts, setDroneCounts] = useState({
+    active: 0,
+    connected: 0,
+    stopped: 0,
+    repair: 0,
+    charging: 0
+  });
 
   const handleMarkerClick = (droneId) => {
     setSelectedDroneFromMap(droneId);
@@ -222,6 +230,13 @@ const scrollBarStyles = {
   const [formattedDronesForMap, setFormattedDronesForMap] = useState(initGeoJSON);
   const [missions,setMissions]=useState([]);
   const [recentNotifications, setRecentNotifications] = useState([]);
+  const [chartLoading, setChartLoading] = useState(true);
+  const [currentMissions, setCurrentMissions] = useState([]);
+  // const [missions, setMissions] = useState([]);
+  const [totalMissions, setTotalMissions] = useState(0);
+  const [inProgressMissionsCount, setInProgressMissionsCount] = useState(0);
+  const [totalCameraActions, setTotalCameraActions] = useState(0);
+  const [statusZero, setStatusZero] = useState(true);
 
   let userdetails=JSON.parse(window.sessionStorage.getItem("userdetails"));
 
@@ -252,6 +267,22 @@ const scrollBarStyles = {
       params: {
         userId: userdetails.email
       }
+    });
+    //console.log(res.data);
+    return res.data;
+  }
+
+  const getAllDrones = async ()=>{
+    const res = await axios.get(`${BASE_URL}${API_ENDPOINTS.getAllDrones}`);
+    //console.log(res.data);
+    return res.data;
+  }
+
+  const getAllMissionsForGivenUser = async ()=>{
+    const res = await axios.get(`${BASE_URL}${API_ENDPOINTS.getAllMissionsForGivenUser}/`,{
+        params: {
+            userId: userdetails.email
+        }
     });
     //console.log(res.data);
     return res.data;
@@ -313,6 +344,104 @@ const scrollBarStyles = {
 
       const recentNotif = await getRecentNotifications();
       setRecentNotifications(recentNotif);
+
+      const allDrones = await getAllDrones();
+      setDroneCount(allDrones.length);
+      // Initialize count variables
+      let activeCount = 0;
+      let connectedCount = 0;
+      let stoppedCount = 0;
+      let repairCount = 0;
+      let chargingCount = 0;
+
+      // Iterate over each drone and count based on last_known_status
+      allDrones.forEach(drone => {
+        switch (drone.last_known_status.toLowerCase()) {
+          case 'active':
+            activeCount++;
+            break;
+          case 'connected':
+            connectedCount++;
+            break;
+          case 'stopped':
+            stoppedCount++;
+            break;
+          case 'repair':
+            repairCount++;
+            break;
+          case 'charging':
+            chargingCount++;
+            break;
+          default:
+            break;
+        }
+      });
+
+      const isAllStatusZero = areAllValuesZero({
+        active: activeCount,
+        connected: connectedCount,
+        stopped: stoppedCount,
+        repair: repairCount,
+        charging: chargingCount
+      });
+      console.log(isAllStatusZero);
+      if(!isAllStatusZero)
+      {
+        setStatusZero(false);
+      }
+
+      // Update state with the counts
+      setDroneCounts({
+        active: activeCount,
+        connected: connectedCount,
+        stopped: stoppedCount,
+        repair: repairCount,
+        charging: chargingCount
+      });
+
+
+      const fetchedMissions = await getAllMissionsForGivenUser();
+      //console.log(basicMissionDtlsFromDroneID);
+      setCurrentMissions(fetchedMissions);
+
+      // Count all missions
+      setTotalMissions(fetchedMissions.length);
+
+      // Calculate the number of "In Progress" missions
+      const inProgressMissionsCount1 = fetchedMissions.reduce((totalCount, mission) => {
+        if (mission.mission_status === 'In Progress') {
+            return totalCount + 1;
+        } else {
+            return totalCount;
+        }
+      }, 0);
+      setInProgressMissionsCount(inProgressMissionsCount1);
+
+      // Function to calculate the total number of camera actions in completed missions
+      const calculateTotalCameraActions = () => {
+        let totalCameraActions = 0;
+
+        // Iterate over each completed mission
+        fetchedMissions.forEach(mission => {
+            if (mission.mission_status === 'Completed') {
+                // Iterate over each mission waypoint
+                mission.mission_waypoints.forEach(waypoint => {
+                    const cameraAction = waypoint.camera_actions;
+                    if (cameraAction === 1 || cameraAction === 2 || cameraAction === 3) {
+                        totalCameraActions++;
+                    }
+                });
+            }
+        });
+
+        return totalCameraActions;
+      };
+
+      // Call the function to calculate total camera actions
+      const totalCameraActions1 = calculateTotalCameraActions();
+      setTotalCameraActions(totalCameraActions1);
+
+      setChartLoading(false);
       // setdronecount(data);
       // setusercount(data1);
       // setmissioncount(data2);
@@ -355,6 +484,17 @@ const scrollBarStyles = {
         }))
       }
     };
+  }
+
+  function areAllValuesZero(obj) {
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (obj[key] !== 0) {
+                return false;
+            }
+        }
+    }
+    return true;
   }
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -421,10 +561,24 @@ const scrollBarStyles = {
             borderRadius="20px"
             boxShadow="5px 8px 10px 0px rgba(96,125,139,0.89)"
           >
-            <DroneStatisticsCard
-              title = "Total Drones"
-              count = {droneSummary.total_drones}
-            />
+            {
+              !chartLoading ? 
+              (
+                <DroneStatisticsCard
+                  title = "Total Drones"
+                  count = {droneCount}
+                />
+              ):
+              (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                    <CircularProgress 
+                        sx={{
+                            color: theme.palette.neutral.light
+                        }}
+                    />
+                </Box>
+              )
+            }
           </Box>
 
           <Box
@@ -437,10 +591,24 @@ const scrollBarStyles = {
             borderRadius="20px"
             boxShadow="5px 8px 10px 0px rgba(96,125,139,0.89)"
           >
-            <DroneStatisticsCard
-              title = "Total Missions"
-              count = {droneSummary.total_missions}
-            />
+            {
+              !chartLoading ? 
+              (
+                <DroneStatisticsCard
+                  title = "Total Ongoing Missions"
+                  count = {inProgressMissionsCount}
+                />
+              ):
+              (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                    <CircularProgress 
+                        sx={{
+                          color: theme.palette.neutral.light
+                        }}
+                    />
+                </Box>
+              )
+            }
           </Box>
 
           <Box
@@ -453,10 +621,24 @@ const scrollBarStyles = {
             borderRadius="20px"
             boxShadow="5px 8px 10px 0px rgba(96,125,139,0.89)"
           >
-            <DroneStatisticsCard
-              title = "Total Trips"
-              count = {droneSummary.total_trips}
-            />
+            {
+              !chartLoading ? 
+              (
+                <DroneStatisticsCard
+                  title = "Total Trips Taken"
+                  count = {totalMissions}
+                />
+              ):
+              (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                    <CircularProgress 
+                        sx={{
+                          color: theme.palette.neutral.light
+                        }}
+                    />
+                </Box>
+              )
+            }
           </Box>
 
           <Box
@@ -469,10 +651,24 @@ const scrollBarStyles = {
             borderRadius="20px"
             boxShadow="5px 8px 10px 0px rgba(96,125,139,0.89)"
           >
-            <DroneStatisticsCard
-              title = "Total Flight Hours"
-              count = {droneSummary.total_flight_hours + ' Hours'}
-            />
+            {
+              !chartLoading ? 
+              (
+                <DroneStatisticsCard
+                  title = "Total Camera Actions"
+                  count = {totalCameraActions}
+                />
+              ):
+              (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                    <CircularProgress 
+                        sx={{
+                          color: theme.palette.neutral.light
+                        }}
+                    />
+                </Box>
+              )
+            }
           </Box>
         </Box>
       </Box>
@@ -520,7 +716,33 @@ const scrollBarStyles = {
         boxShadow="5px 8px 10px 0px rgba(96,125,139,0.89)"
         backgroundColor={theme.palette.neutral.light}
       >
-        <DroneStatus statusData={droneSummary.drone_counts} />
+        {
+          !statusZero ? 
+          (
+            !chartLoading ? 
+            (
+              <DroneStatus statusData={droneCounts} />
+            ):
+            (
+              <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                  <CircularProgress 
+                      sx={{
+                          color: theme.palette.secondary.main
+                      }}
+                  />
+              </Box>
+            )
+          ):
+          (
+            <p style={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              textAlign:"center"
+            }}>
+              No drones assigned to you yet.
+            </p>
+          )
+        }
       </Box>
 
       {/* Display Map */}

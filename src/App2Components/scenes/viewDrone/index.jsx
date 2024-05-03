@@ -22,7 +22,7 @@ const ViewDrone = () => {
     const fetchDrones = async () => {
       try {
         const response = await axios.get(`${BASE_URL}${API_ENDPOINTS.getAllDrones}`);
-        console.log(response);
+        // console.log(response);
         setDrones(response.data);
       } catch (error) {
         console.error('Error fetching drone data:', error);
@@ -90,6 +90,7 @@ const ViewDrone = () => {
         <Box>
           <Typography 
             marginBottom="30px" 
+            marginTop="20px"
             variant="h1"
             fontWeight="bold" 
             color={theme.palette.neutral.dark}
@@ -737,6 +738,16 @@ const ViewDrone = () => {
           <p>Model: {drones.length > 0 && drones[selectedDroneIndex].model}</p>
           <p>Type: {drones.length > 0 && drones[selectedDroneIndex].type}</p>
         </div> */}
+        <style>
+          {`.swiper-slide-active {
+                border-radius: 85px;
+                background-color: ${theme.palette.secondary.main};
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 50px;
+            }`}
+        </style>
     </Box>
   );
 };

@@ -32,8 +32,8 @@
     // Create handler
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
-    console.log("Create mission manager")
-    console.log("global var access", MISSION_MODE, serviceType, droneId)
+    // console.log("Create mission manager")
+    // console.log("global var access", MISSION_MODE, serviceType, droneId)
     // Init cesium class mission manager
     var cesiumMissionManager = new MissionManager(viewer, missionModeController, aletManager, MISSION_THUMBNAIL)
 
@@ -118,7 +118,7 @@
             if (Cesium.defined(pickedObject)) {
                 const pickedObjectName = pickedObject.id.name
                 if (pickedObjectName) {
-                    console.log('pickedObject', pickedObjectName)
+                    // console.log('pickedObject', pickedObjectName)
 
                     if (['groundPoint', 'altPoint', 'loiterCyl'].includes(pickedObjectName)) {
                         dragging_point = pickedObject
@@ -230,42 +230,43 @@
 
     $(document).ready(function () {
         var missionJSON;
-        console.log("go to 003 " + missionId);
+        // console.log("go to 003 " + missionId);
     
         async function fetchMissionData() {
             if (missionId != "") {
-                console.log("go fetch data");
+                // console.log("go fetch data");
                 try {
                     const response = await fetch(`https://dronecloudbackend.adaptable.app/api/getonemissionforplanner?missionId=${missionId}`);
+                    // const response = await fetch(`http://localhost:5001/api/getonemissionforplanner?missionId=${missionId}`);
                     const data = await response.json();
                     missionJSON = data;
                     if(data.message === "Mission not found")
                     {
                         missionJSON = "{}";
                     }
-                    console.log("fetched mission " + missionId + " content " + missionJSON);
+                    // console.log("fetched mission " + missionId + " content " + missionJSON);
                 } catch (error) {
                     console.error("Error fetching mission data:", error);
                 }
             } else {
-                console.log("mission id is empty");
+                // console.log("mission id is empty");
             }
         }
     
         // Call the asynchronous function and process mission data afterwards
         fetchMissionData().then(() => {
-            console.log("get mission data " + missionJSON + " missionId " + missionId);
+            // console.log("get mission data " + missionJSON + " missionId " + missionId);
             if (missionJSON && missionJSON != "\"\"" && missionJSON != "{}") {
-                console.log("go to 005");
+                // console.log("go to 005");
                 cesiumMissionManager.loadJsonMission(missionJSON, missionJSON.mission_name);
             } else {
-                console.log("missionJSON: " + missionJSON);
+                // console.log("missionJSON: " + missionJSON);
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
                         var lon = position.coords.longitude;
                         var lat = position.coords.latitude;
     
-                        console.log("go to 006");
+                        // console.log("go to 006");
                         setTimeout(function () {
                             viewer.camera.flyTo({
                                 destination: Cesium.Cartesian3.fromDegrees(lon, lat, 15000),

@@ -52,7 +52,7 @@ class DomMissionManager {
         defaultAltInput.val(this.missionManager.defaultTerrainAlt)
         defaultWPRadiusInput.val(this.missionManager.defaultWPRadius)
 
-        console.log("createMissionMenu:", this.missionManager.service_type, this.missionManager.drone_id)
+        // console.log("createMissionMenu:", this.missionManager.service_type, this.missionManager.drone_id)
         defaultMissionServiceType.val(this.missionManager.service_type)
         defaultMissionServiceType.text(this.missionManager.service_type)
         defaultMissionDroneId.val(this.missionManager.drone_id)
@@ -196,22 +196,23 @@ class DomMissionManager {
             if (!inst.missionManager.missionHealthy) {
                 return  // TODO add error
             }
-            console.log("hello! i am going to send data to backend")
+            // console.log("hello! i am going to send data to backend")
             
             var JSONmission = inst.missionManager.getJsonMission();
-            console.log(JSONmission);
+            // console.log(JSONmission);
 
             var formAction = inst.missionMenu.attr('action');
             var formData = new FormData(inst.missionMenu[0]);
             const thumbnailName = !inst.missionManager.thumbnailName
                 ? "mission.png"
                 : inst.missionManager.thumbnailName;
-            console.log("inst.missionMenu[0]", inst.missionMenu[0]);
-            console.log("formData", formData);
-            console.log("formAction", formAction);
-            console.log("thumbnailName", thumbnailName);
+            // console.log("inst.missionMenu[0]", inst.missionMenu[0]);
+            // console.log("formData", formData);
+            // console.log("formAction", formAction);
+            // console.log("thumbnailName", thumbnailName);
 
             fetch('https://dronecloudbackend.adaptable.app/api/createMissionPlanNew', {
+            // fetch('http://localhost:5001/api/createMissionPlanNew', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -226,10 +227,10 @@ class DomMissionManager {
                 }
             })
             .then(data => {
-                console.log('Success:', data);
+                // console.log('Success:', data);
                 showSnackbar("Mission Created/Updated Successfully");
                 var jsonObj = JSON.parse(JSONmission)
-                console.log(jsonObj);
+                // console.log(jsonObj);
                 // window.history.pushState({
                 //     latitude: jsonObj.items[0].coordinates[0],
                 //     longitude: jsonObj.items[0].coordinates[1],
@@ -246,7 +247,7 @@ class DomMissionManager {
                 //.setItem('clickResult', 'Mission Created/Updated Successfully');
             })
             .catch((error) => {
-                console.error('Error:', error);
+                // console.error('Error:', error);
                 showSnackbar("Mission Creation/Updation Failed");
 
                 // Set the click state to true in localStorage
@@ -528,7 +529,7 @@ class DomMissionManager {
         defaultSpeedInput.val(defaults.defaultSpeed)
         defaultFrameOption.val(defaults.defaultFrame)
         defaultAltInput.val(defaults.defaultTerrainAlt)
-        console.log("setDefaultValues: ", this.missionManager.service_type, this.missionManager.drone_id)
+        // console.log("setDefaultValues: ", this.missionManager.service_type, this.missionManager.drone_id)
         defaultServiceType.val(this.missionManager.service_type)
         defaultDroneId.val(this.missionManager.drone_id)
     }
@@ -652,7 +653,7 @@ class DomMissionManager {
     }
 
     validationError(validated, errorText) {
-        console.log('error', validated, errorText)
+        // console.log('error', validated, errorText)
         if (validated) {
             this.formSubmit.removeClass('btn-primary')
             this.formSubmit.addClass('btn-danger')

@@ -47,7 +47,7 @@ const TrackMissionDialog = ({missionsFromDroneID, selectedDroneFromMap, handleCl
     };
 
     const handleTrackMissionClick = (mission) => {
-        console.log(mission);
+        // console.log(mission);
         //setSelectedMissionID(mission.mission_id);
         navigate(`/tracking/${selectedDroneFromMap}/mission/${mission.mission_id}`);
         window.location.reload();

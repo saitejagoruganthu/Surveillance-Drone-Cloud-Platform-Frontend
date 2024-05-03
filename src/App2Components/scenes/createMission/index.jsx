@@ -148,14 +148,14 @@ const theme = useTheme();
     };
 
     const handleFormSubmit = (values) => {
-        console.log('Submitted Mission Details:', values);
+        // console.log('Submitted Mission Details:', values);
         //navigate('/dashboard/missionPlanner');
         //navigate('/dashboard/missionPlanner', { state: { mission_type: values.MissionType, drone_id: values.Drone , user_id: tenantId, missionId} });
         navigate('/dashboard/missionPlanner', { state: { 
             mission_type: values.MissionType, 
             drone_id: values.Drone , 
             user_id: tenantId, 
-            missionId: values.MissionId,
+            missionId: '',
             mission_name: values.MissionName,
             mission_description: values.MissionDescription,
             mission_start_time: values.StartDateTime,
@@ -164,7 +164,7 @@ const theme = useTheme();
     };
 
     const checkoutSchema = yup.object().shape({
-        MissionId: yup.string().required("Required"),
+        // MissionId: yup.string().required("Required"),
         MissionName: yup.string().required("Required"),
         MissionDescription: yup.string(),
         StartDateTime: yup.date().required("Start time is required"),
@@ -173,7 +173,7 @@ const theme = useTheme();
     });
 
     const initialValues = {
-        MissionId: "",
+        // MissionId: "",
         MissionName: "",
         MissionDescription: "",
         StartDateTime: null,
@@ -233,7 +233,7 @@ const theme = useTheme();
                             <form onSubmit={handleSubmit}>
                                 <FormControl className="form-control" fullWidth>
                                 {/* <label htmlFor="MissionId">Mission ID</label> */}
-                                <TextField
+                                {/* <TextField
                                     fullWidth
                                     variant="outlined"
                                     type="text"
@@ -245,7 +245,7 @@ const theme = useTheme();
                                     error={touched.MissionId && Boolean(errors.MissionId)}
                                     helperText={touched.MissionId && errors.MissionId}
                                 />
-                                <br />
+                                <br /> */}
                                 
                                 {/* <label htmlFor="MissionId">Mission Name</label> */}
                                 <TextField

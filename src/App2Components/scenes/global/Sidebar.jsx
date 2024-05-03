@@ -24,6 +24,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
 import prof from './user.png'
 import sai from './sai1.jpg';
+import harish from './Harish.jpg';
+import reshma from './Reshma.jpg';
+import sowjanya from './Sowjanya.jpg';
 
 const Item = React.memo(({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -139,9 +142,9 @@ const Sidebar = ({selected, setSelected}) => {
                   alignItems="center"
                   ml="15px"
                 >
-                  <Typography variant="h3" color={colors.grey[500]}>
+                  {/* <Typography variant="h3" color={colors.grey[500]}>
                     {userdetails.role}
-                  </Typography>
+                  </Typography> */}
                   <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                     <MenuOutlinedIcon />
                   </IconButton>
@@ -159,6 +162,9 @@ const Sidebar = ({selected, setSelected}) => {
                     src={
                       userdetails.firstname=="gao"? prof
                       :userdetails.lastname=="Goruganthu"? sai
+                      :userdetails.lastname=="Bobba"? reshma
+                      :userdetails.lastname=="Bheemineni"? sowjanya
+                      :userdetails.lastname=="Marepalli"? harish
                       :"https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}
                     style={{ cursor: "pointer", borderRadius: "50%" }}
                   />

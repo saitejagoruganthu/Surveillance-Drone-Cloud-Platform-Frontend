@@ -178,6 +178,19 @@
   font-size: 14px;
 }
 
+.mapboxgl-popup-content p.missionIdClass
+{
+  font-weight: bold;
+  font-size: 18px;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
 /* .mapboxgl-popup-tip
 {
   border-top-color: dodgerblue !important;

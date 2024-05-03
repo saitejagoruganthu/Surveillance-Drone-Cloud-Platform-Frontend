@@ -4,7 +4,7 @@ class MissionManager {
         this.generalManager = generalManager
         this.number = number
         this.id = id
-        console.log("mission manager constructor access gllobal: ", serviceType, droneId, tenantId, missionId, missionName, missionDesc, missionStartTime, missionEndTime)
+        // console.log("mission manager constructor access gllobal: ", serviceType, droneId, tenantId, missionId, missionName, missionDesc, missionStartTime, missionEndTime)
         this.service_type = serviceType
         this.drone_id = droneId
         this.tenant_id = tenantId
@@ -13,7 +13,7 @@ class MissionManager {
         this.mission_description = missionDesc
         this.mission_start_time = missionStartTime
         this.mission_end_time = missionEndTime
-        console.log("mission manager constructor: ", this.service_type, this.drone_id, this.tenant_id, this.mission_id, this.mission_name, this.mission_description, this.mission_start_time, this.mission_end_time)
+        // console.log("mission manager constructor: ", this.service_type, this.drone_id, this.tenant_id, this.mission_id, this.mission_name, this.mission_description, this.mission_start_time, this.mission_end_time)
         this.MModeController = MModeController
         this.alertManager = alertManager
         this.thumbnailName = thumbnailName.split('/')[1]
@@ -342,7 +342,7 @@ class MissionManager {
     changeItemType(itemId, newType) {
         let newItem = undefined
         let prevItem = undefined
-        console.log('change item', newType)
+        // console.log('change item', newType)
         switch(newType) {
             case 'launch':
                 if (!this.hasLaunchPoint) {
@@ -885,7 +885,7 @@ class MissionManager {
     }
 
     selectDomItem(except) {
-        console.log('select item', this.missionItems[except])
+        // console.log('select item', this.missionItems[except])
         this.domManager.selectItem(except)
     }
 
@@ -914,7 +914,7 @@ class MissionManager {
         for (let missionItem of this.missionItems) {
             items.push(missionItem.getDjangoJsonItem())
         }
-        console.log('items', items)
+        // console.log('items', items)
 
         let flightData = []
         for (let item of items)
@@ -922,7 +922,7 @@ class MissionManager {
             let flightdata_item = {longitude:item.coordinates[1],latitude:item.coordinates[0],height:item.coordinates[2]}
             flightData.push(flightdata_item)
         }
-        console.log('flightData', flightData)
+        // console.log('flightData', flightData)
 
         /*
         const flightData = JSON.parse(
@@ -1046,7 +1046,7 @@ class MissionManager {
         for (let missionItem of this.missionItems) {
             items.push(missionItem.getDjangoJsonItem())
         }
-        console.log(this.domManager);
+        // console.log(this.domManager);
         const mission = {
             version: 2,
             defaults: defaults,

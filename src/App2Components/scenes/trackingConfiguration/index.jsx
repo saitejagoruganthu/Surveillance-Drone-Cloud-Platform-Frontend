@@ -70,7 +70,7 @@ const TrackingConfiguration = () => {
                 userId: userdetails.email
             }
         });
-        console.log(res.data);
+        // console.log(res.data);
         return res.data;
     }
 
@@ -312,10 +312,10 @@ const TrackingConfiguration = () => {
                             gap="30px"
                             gridTemplateColumns="1fr 1fr"
                         >
-                            <PropertyValueCard property="Mission ID" value={data.mission_id} color={theme.palette.neutral.dark}/>
+                            <PropertyValueCard property="Mission ID" value={data.mission_id.substring(0,8)+"..."} color={theme.palette.neutral.dark}/>
                             <PropertyValueCard property="Mission Type" value={data.mission_type} color={theme.palette.neutral.dark}/>
                             <PropertyValueCard property="Mission Location" value={data.mission_location} color={theme.palette.neutral.dark}/>
-                            <PropertyValueCard property="Mission Distance(m)" value={data.mission_distance} color={theme.palette.neutral.dark}/>
+                            <PropertyValueCard property="Mission Distance(m)" value={data.mission_distance.toFixed(2)} color={theme.palette.neutral.dark}/>
                         </Box>
                         <Box 
                             display="flex" 

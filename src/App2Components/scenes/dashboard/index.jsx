@@ -29,7 +29,7 @@ const Dashboard = () => {
     const res = await axios.get(
       `${BASE_URL}${API_ENDPOINTS.countDrones}`
     );
-    console.log('Data received from backend:', res.data);
+    // console.log('Data received from backend:', res.data);
     return res.data;
   };
 
@@ -37,7 +37,7 @@ const Dashboard = () => {
     const res = await axios.get(
       `${BASE_URL}${API_ENDPOINTS.countUsers}`
     );
-    console.log('Data received from backend:', res.data);
+    // console.log('Data received from backend:', res.data);
     return res.data;
   };
 
@@ -45,7 +45,7 @@ const Dashboard = () => {
     const res = await axios.get(
       `${BASE_URL}${API_ENDPOINTS.countMissions}`
     );
-    console.log('Data received from backend:', res.data);
+    // console.log('Data received from backend:', res.data);
     return res.data;
   };
 
@@ -62,7 +62,7 @@ const Dashboard = () => {
     const res = await axios.get(
       `${BASE_URL}${API_ENDPOINTS.getAllMissionPlans}/${TenantId}`
     );
-    console.log('Data received from backendmission:', res.data);
+    // console.log('Data received from backendmission:', res.data);
     return res.data;
   };
 
@@ -76,7 +76,7 @@ const Dashboard = () => {
       setusercount(data1);
       setmissioncount(data2);
       setmissions(data3);
-      console.log("DATA3:",data3);
+      // console.log("DATA3:",data3);
     }
     fetchData();
   }, []);

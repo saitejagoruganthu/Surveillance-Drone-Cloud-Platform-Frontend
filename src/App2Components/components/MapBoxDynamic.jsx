@@ -230,7 +230,7 @@ export default function MapBoxDynamic({droneTrackMapData,selectedMissionID,selec
           const markerPopup = new mapboxgl.Popup({ offset: 25, closeButton: false, closeOnClick: false }).setHTML(
             `<p class='markerDescTitle'>${liveNotification.message}</p>`
           );
-          console.log(markerRef);
+          // console.log(markerRef);
           markerRef.current.setPopup(markerPopup).addTo(map1.current);
           markerPopup.addTo(map1.current)
 

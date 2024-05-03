@@ -55,9 +55,9 @@ function AddMapForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(inputData);
+        // console.log(inputData);
         sendRequest().then(() => alert("Added map succesfully!!"))
-        console.log(inputData.TenantId);
+        // console.log(inputData.TenantId);
         //.then(() => navigate("/dashboard"));
     };
 

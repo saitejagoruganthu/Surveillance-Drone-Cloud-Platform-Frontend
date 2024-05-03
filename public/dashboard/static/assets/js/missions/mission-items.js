@@ -877,7 +877,7 @@ class WaypointItem extends CesiumMissionNavItem {
             if (inst.fieldsHealthHandler(validated, targetClass))
                 inst.holdTime = Number(value)
 
-            console.log('itemHealthy', inst.itemHealthy)
+            // console.log('itemHealthy', inst.itemHealthy)
         })
 
         headingInput.val(isNaN(this.heading) ? '' : this.heading)
@@ -2361,7 +2361,7 @@ class VtolTakeoff extends CesiumMissionNavItem {
 
     setupDomItem(itemHTML) {
         function showHeading(show) {
-            console.log('show heading', headingInput)
+            // console.log('show heading', headingInput)
             if (show)
                 headingInput.closest('.row').css('display', 'flex')
             else

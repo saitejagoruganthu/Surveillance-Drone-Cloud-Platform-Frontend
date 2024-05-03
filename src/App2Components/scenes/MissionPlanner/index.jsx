@@ -24,14 +24,14 @@ function MissionPlanner({setSelected}) {
   // drone_id = props.drone_id;
   // user_id = props.user_id;
   // missionId = props.missionId;
-  console.log(mission_type);
-  console.log(drone_id);
-  console.log(user_id);
-  console.log(missionId);
-  console.log(mission_name);
-  console.log(mission_description);
-  console.log(mission_start_time);
-  console.log(mission_end_time);
+  // console.log(mission_type);
+  // console.log(drone_id);
+  // console.log(user_id);
+  // console.log(missionId);
+  // console.log(mission_name);
+  // console.log(mission_description);
+  // console.log(mission_start_time);
+  // console.log(mission_end_time);
   // You might want to encode the parameters to ensure they are URL-safe.
   const serviceTypeEncoded = encodeURIComponent(mission_type);
   const droneIdEncoded = encodeURIComponent(drone_id);
@@ -44,14 +44,14 @@ function MissionPlanner({setSelected}) {
 
   // Modify the src URL to include the serviceType and droneId as query parameters.
   const iframeSrc = `my-app1.html?serviceType=${serviceTypeEncoded}&droneId=${droneIdEncoded}&tenantId=${tenantIdEncoded}&missionId=${missionIdEncoded}&missionName=${missionNameEncoded}&missionDesc=${missionDescEncoded}&missionStartTime=${missionStartEncoded}&missionEndTime=${missionEndEncoded}`;
-  console.log(serviceTypeEncoded);
-  console.log(droneIdEncoded);
-  console.log(tenantIdEncoded);
-  console.log(missionIdEncoded);
-  console.log(missionNameEncoded);
-  console.log(missionDescEncoded);
-  console.log(missionStartEncoded);
-  console.log(missionEndEncoded);
+  // console.log(serviceTypeEncoded);
+  // console.log(droneIdEncoded);
+  // console.log(tenantIdEncoded);
+  // console.log(missionIdEncoded);
+  // console.log(missionNameEncoded);
+  // console.log(missionDescEncoded);
+  // console.log(missionStartEncoded);
+  // console.log(missionEndEncoded);
 
   useEffect(() => {
     // Listen for changes in localStorage

@@ -175,7 +175,7 @@ const ViewMissions = () => {
         // Prevent the event from propagating to the parent accordion summary
         event.stopPropagation();
 
-        console.log(missionId);
+        // console.log(missionId);
         navigate(`/editMission/${missionId}`);
         //window.location.reload();
     }
@@ -198,13 +198,14 @@ const ViewMissions = () => {
     }, []);
 
     useEffect(() => {
-        console.log('Hello');
+        // console.log('Hello');
         // setSnackbarMsg("Mission Created/Updated Successfully");
         // setState({ ...state, open: true });
-        console.log(location.state);
+        // console.log(location.state);
         if (location.state && location.state.extraInfo) {
             setSnackbarMsg(location.state.extraInfo);
             setState({ ...state, open: true });
+            location.state=null;
         }
     }, []);
 
@@ -229,7 +230,7 @@ const ViewMissions = () => {
             iconSize: [75, 75], // Adjust icon size as needed
             imgUrl: '/images/drone1.png', // Replace with actual image URL
             //description: `<strong>Drone-ID: ${drone.drone_id}</strong><p class='desc'>Mission-ID: ${drone.mission_id}</p><p class='desc'>${drone.mission_type}</p><p class='desc'>${drone.mission_location}</p>`
-            description: `<strong>Mission-ID: ${mission.mission_id}</strong><p class='desc'>${mission.mission_type}</p><p class='desc'>${mission.mission_location}</p>`
+            description: `<p class='missionIdClass'>${mission.mission_id}</p><p class='desc'>${mission.mission_type}</p><p class='desc'>${mission.mission_location}</p>`
           },
           geometry: {
             type: 'Point',
@@ -419,7 +420,11 @@ const ViewMissions = () => {
                                         variant="h4" 
                                         fontWeight="bold"
                                         sx={{
-                                            marginBottom: '10px'
+                                            marginBottom: '10px',
+                                            width: "150px",
+                                            overflow: "hidden",
+                                            whiteSpace: "nowrap",
+                                            textOverflow: "ellipsis"
                                         }}
                                     >
                                         {filteredMission.id}

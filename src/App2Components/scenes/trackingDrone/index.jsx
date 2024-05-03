@@ -259,7 +259,7 @@ const TrackingDrone = () => {
 
             const notifdata = await getNotificationsForMission(missionId);
             const sortedNotifications = notifdata.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            console.log(sortedNotifications);
+            // console.log(sortedNotifications);
             setNotifications(sortedNotifications);
 
             const {config} = await getMissionTrackingConfig(missionId);

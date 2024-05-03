@@ -86,7 +86,7 @@ const ModifyMission = () => {
                     missionId: missionId
                     }
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 setMissionForPlanner(response.data);
                 //setLoading(false);
             } catch (error) {
@@ -132,7 +132,7 @@ const ModifyMission = () => {
     };
 
     const handleFormSubmit = (values) => {
-        console.log('Submitted Mission Details:', values);
+        // console.log('Submitted Mission Details:', values);
         //navigate('/dashboard/missionPlanner');
         //navigate('/dashboard/missionPlanner', { state: { mission_type: values.MissionType, drone_id: values.Drone , user_id: tenantId, missionId} });
         navigate('/dashboard/missionPlanner', { state: { 
@@ -150,7 +150,7 @@ const ModifyMission = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Box m="20px">
-                <Header title={`Modify Mission - ${missionId}`} />
+                <Header title={`Modify Mission - ${missionId.substring(0,8)}...`} />
                 <Box
                     width="50%"
                     margin="auto"

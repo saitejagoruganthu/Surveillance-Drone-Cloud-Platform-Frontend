@@ -128,7 +128,7 @@ const BarChart = ({ isDashboard = false }) => {
       ]}
       role="application"
       barAriaLabel={function (e) {
-        console.log(e);
+        // console.log(e);
         return e.id + ": " + e.formattedValue + " in country: " + e.indexValue;
       }}
     />

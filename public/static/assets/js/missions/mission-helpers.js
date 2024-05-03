@@ -54,7 +54,7 @@ function getMissionUpdateURL(id) {
 };
 
 function validationError(element, error, message) {
-    console.log('validationError', element, error, message)
+    // console.log('validationError', element, error, message)
     let hintIcon = element.siblings('i')
     if (error === false) {
         element.removeClass('validation-fail-input')

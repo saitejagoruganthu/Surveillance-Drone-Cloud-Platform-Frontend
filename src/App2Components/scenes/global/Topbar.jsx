@@ -67,6 +67,11 @@ const Topbar = ({selected, setSelected}) => {
     navigate("/");
   }
 
+  const goToDashboard = ()=>{
+    setSelected("Dashboard");
+    navigate("/dashboard");
+  }
+
   return (
     <Box
       display="flex"
@@ -82,6 +87,10 @@ const Topbar = ({selected, setSelected}) => {
         borderRadius='30px'
         color={theme.palette.neutral.light}
         backgroundColor = {theme.palette.secondary.main}
+        sx={{
+          cursor: 'pointer'
+        }}
+        onClick={goToDashboard}
       >
         <Typography variant="h2">
           Drone Cloud

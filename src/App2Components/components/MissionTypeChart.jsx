@@ -56,7 +56,7 @@ const MyBarChart = ({data}) => {
 
     const getColor = (bar) => 
     {
-        console.log(bar);
+        // console.log(bar);
         return missionTypeColors[bar.data.type]
     };
 

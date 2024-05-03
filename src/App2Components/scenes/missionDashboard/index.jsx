@@ -110,12 +110,12 @@ const MissionDashboard = ({setSelected}) => {
             fetchedMissions.forEach(mission => {
             typeCounts[mission.mission_type] = (typeCounts[mission.mission_type] || 0) + 1;
             });
-            console.log(typeCounts);
+            // console.log(typeCounts);
             setMissionTypeData(typeCounts);
 
             //Get missions in-progress
             const missionsInProgress = fetchedMissions.filter(mission => mission.mission_status === 'In Progress');
-            console.log(missionsInProgress);
+            // console.log(missionsInProgress);
             setCurrentMissions(missionsInProgress);
 
             setLoading(false);
@@ -386,7 +386,11 @@ const MissionDashboard = ({setSelected}) => {
                                 variant="h4" 
                                 fontWeight="bold"
                                 sx={{
-                                    marginBottom: '10px'
+                                    marginBottom: '10px',
+                                    width: "150px",
+                                    overflow: "hidden",
+                                    whiteSpace: "nowrap",
+                                    textOverflow: "ellipsis"
                                 }}
                             >
                                 {curMission.mission_id}
