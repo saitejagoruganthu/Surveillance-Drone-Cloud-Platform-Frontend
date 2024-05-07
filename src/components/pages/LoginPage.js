@@ -10,6 +10,7 @@ import TenantIdSingleton from '../../App2Components/components/TenantId';
 import { BASE_URL, API_ENDPOINTS } from '../../config';
 import * as yup from "yup";
 import { Formik } from "formik";
+import Snackbar from '@mui/material/Snackbar';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -17,6 +18,13 @@ const LoginPage = () => {
   const colors = tokens(theme.palette.mode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = state;
+  const [snackbarMsg, setSnackbarMsg] = React.useState('');
 
   const initialValues = {
     Email: "",
@@ -51,11 +59,20 @@ const LoginPage = () => {
     navigate("/register");
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setState({ ...state, open: false });
+  };
+
   const handleFormSubmit = (values) => {
     //e.preventDefault();
     // console.log(`Email: ${email}, Password: ${password}`);
     // Perform authentication here, and handle routing upon successful authentication.
-    sendRequest(values).then(async()=>{
+    sendRequest(values).then(async(data)=>{
+      // console.log(data);
       const res=await axios.get(
         `${BASE_URL}${API_ENDPOINTS.getUserProfile}/${values.Email}`
       );
@@ -64,9 +81,13 @@ const LoginPage = () => {
       // Object.freeze(TenantIdSingleton);
       // res.data.user.email = "marepalliharish@gmail.com";
       // res.data.user.lastname = "Marepalli";
-      window.sessionStorage.setItem("userdetails",JSON.stringify(res.data.user));
-      //window.localStorage.setItem("page","Dashboard");
-      navigate("/dashboard");
+      setSnackbarMsg(data.message);
+      setState({ ...state, open: true });
+      setTimeout(()=> {
+        window.sessionStorage.setItem("userdetails",JSON.stringify(res.data.user));
+        //window.localStorage.setItem("page","Dashboard");
+        navigate("/dashboard");
+      }, 1000)
     });
   };
 
@@ -74,8 +95,12 @@ const LoginPage = () => {
       const res=await axios.post(`${BASE_URL}${API_ENDPOINTS.login}`,{
           email:values.Email,
           password:values.Password,
-      },{withCredentials: true}).catch(err=>console.log(err))
+      },{withCredentials: true}).catch((err)=>{
+        setSnackbarMsg(err.response.data.message);
+        setState({ ...state, open: true });
+      })
       const data=await res.data;
+      // console.log(data);
       return data;
   }
 
@@ -283,6 +308,24 @@ const LoginPage = () => {
               )}
           </Formik>
       </Box>
+      <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}
+            message={snackbarMsg}
+            key={vertical + horizontal}
+            sx={{
+                "& .MuiSnackbarContent-root":{
+                    backgroundColor: theme.palette.secondary.light,
+                },
+                "& .MuiSnackbarContent-message" : {
+                    fontSize: '1.3em',
+                    fontWeight: 'bold',
+                    color: theme.palette.neutral.light
+                }
+            }}
+        />
   </Box>
   );
 };

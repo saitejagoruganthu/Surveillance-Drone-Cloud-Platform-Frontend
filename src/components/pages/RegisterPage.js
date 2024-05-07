@@ -92,7 +92,7 @@ const RegisterPage = () => {
           age:values.Age
       },{withCredentials: true}).catch(err=>console.log(err))
       const data=await res.data;
-      console.log(data);
+      // console.log(data);
       setSnackbarMsg(data.message);
       setState({ ...state, open: true });
       setTimeout(()=> {
