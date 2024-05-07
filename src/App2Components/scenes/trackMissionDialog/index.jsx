@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme, CircularProgress } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -208,50 +208,63 @@ const TrackMissionDialog = ({missionsFromDroneID, selectedDroneFromMap, handleCl
             /> */}
 
         <div style={{display: "flex"}}>
-            {sortedMissions.map((mission) => (
-                <Card 
-                    sx={{ 
-                        maxWidth: 445, 
-                        width: 380, 
-                        margin: 5, 
-                        borderRadius:5,
-                        backgroundColor: theme.palette.background.default  
-                    }} 
-                    key={mission.mission_id}
-                >
-                    <CardMedia
-                        sx={{ height: 220 }}
-                        image={`/images/${mission.mission_id}.jpg`}
-                        title={`${mission.mission_location}`}
-                        //image='/images/missionbg_dummy.jpg'
-                    />
-                    <CardContent>
-                        <Typography variant="body1" color="text.secondary" mb={2}>{mission.mission_id}</Typography>
-                        <Typography gutterBottom variant="h3" component="div">{mission.mission_location}</Typography>
-                        <Typography variant="body1" color="text.secondary">{mission.mission_type}</Typography>
-                        <br />
-                        <Typography variant="h4" color="text.secondary">{mission.mission_status}</Typography>
-                    </CardContent>
-                    <CardActions sx={{padding:2, justifyContent: 'center'}}>
-                    <Button 
-                        //color={theme.palette.secondary.main} 
-                        variant="contained" 
-                        size="large" 
-                        onClick={()=>handleTrackMissionClick(mission)}
-                        sx={{
-                            color: theme.palette.neutral.light,
-                            backgroundColor: theme.palette.secondary.main,
-                            "&:hover": {
-                                color: theme.palette.neutral.light,
-                                backgroundColor: theme.palette.secondary.light, // Change to the desired hover color
-                            }
-                        }}
+            { missionsFromDroneID.length>0 ? 
+                (
+                    sortedMissions.map((mission) => (
+                    <Card 
+                        sx={{ 
+                            maxWidth: 445, 
+                            width: 380, 
+                            margin: 5, 
+                            borderRadius:5,
+                            backgroundColor: theme.palette.background.default  
+                        }} 
+                        key={mission.mission_id}
                     >
-                        Track Mission
-                    </Button>
-                    </CardActions>
-                </Card>
-            ))}
+                        <CardMedia
+                            sx={{ height: 220 }}
+                            image={`/images/${mission.mission_id}.jpg`}
+                            title={`${mission.mission_location}`}
+                            //image='/images/missionbg_dummy.jpg'
+                        />
+                        <CardContent>
+                            <Typography variant="body1" color="text.secondary" mb={2}>{mission.mission_id}</Typography>
+                            <Typography gutterBottom variant="h3" component="div">{mission.mission_location}</Typography>
+                            <Typography variant="body1" color="text.secondary">{mission.mission_type}</Typography>
+                            <br />
+                            <Typography variant="h4" color="text.secondary">{mission.mission_status}</Typography>
+                        </CardContent>
+                        <CardActions sx={{padding:2, justifyContent: 'center'}}>
+                        <Button 
+                            //color={theme.palette.secondary.main} 
+                            variant="contained" 
+                            size="large" 
+                            onClick={()=>handleTrackMissionClick(mission)}
+                            sx={{
+                                color: theme.palette.neutral.light,
+                                backgroundColor: theme.palette.secondary.main,
+                                "&:hover": {
+                                    color: theme.palette.neutral.light,
+                                    backgroundColor: theme.palette.secondary.light, // Change to the desired hover color
+                                }
+                            }}
+                        >
+                            Track Mission
+                        </Button>
+                        </CardActions>
+                    </Card>
+                    ))
+                ):
+                (
+                    <Box display="flex" justifyContent="center" alignItems="center" height="200px" margin="auto">
+                        <CircularProgress 
+                            sx={{
+                            color: theme.palette.secondary.light
+                            }}
+                        />
+                    </Box>
+                )
+            }
         </div>
         <div
           style={{margin:'1em', display: 'flex', justifyContent: 'end'}}

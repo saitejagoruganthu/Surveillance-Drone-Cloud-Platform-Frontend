@@ -5,6 +5,7 @@ import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
@@ -182,7 +183,7 @@ const Topbar = ({selected, setSelected}) => {
             sx={{ width: '50px', height: '50px' }}
             onClick={() => handleLogout()}
           >
-            <PersonOutlinedIcon />
+            <LogoutIcon />
           </IconButton>
         </Tooltip>
           <IconButton
